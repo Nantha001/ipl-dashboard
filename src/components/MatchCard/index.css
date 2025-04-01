@@ -1,0 +1,31 @@
+/* Write your CSS here */
+.match-card {
+  width: 200px;
+
+  background-color: black;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+  height: 300px;
+  align-items: center;
+  justify-content: center;
+}
+
+.img {
+  width: 50%;
+  margin-bottom: 0.5cm;
+}
+.match-card p {
+  font-size: 14px;
+  color: white;
+  margin-bottom: 0.5cm;
+  align-self: flex-start;
+}
+.green {
+  color: green;
+}
+.lost {
+  color: red;
+}

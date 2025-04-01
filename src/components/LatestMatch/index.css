@@ -1,0 +1,25 @@
+/* Write your CSS here */
+.lastest-match-card {
+  width: 80%;
+  padding: 20px;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  background-color: black;
+}
+
+.lastest-match-img {
+  width: 230px;
+  height: 230px;
+}
+
+.lastest-match-card p {
+  color: white;
+
+  font-size: 16px;
+  margin: 10px;
+  font-weight: bold;
+}
