@@ -2,12 +2,8 @@ import './index.css'
 
 const MatchCard = props => {
   const {recentMatchItem} = props
-  const {
-    result,
-    matchStatus,
-    competingTeam,
-    competingTeamLogo,
-  } = recentMatchItem
+  const {result, matchStatus} = recentMatchItem
+  const {competingTeam, competingTeamLogo} = recentMatchItem
 
   const css = () => {
     if (matchStatus === 'Won') return 'green'

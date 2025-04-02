@@ -1,6 +1,9 @@
 import './index.css'
+import {Link} from 'react-router-dom'
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
+
+import {PieChart, Pie, Cell, Legend, Tooltip} from 'recharts'
 import LatestMatch from '../LatestMatch'
 import MatchCard from '../MatchCard'
 
@@ -36,6 +39,7 @@ class TeamMatches extends Component {
     const {id} = params
     const response = await fetch(`https://apis.ccbp.in/ipl/${id}`)
     const matches = await response.json()
+
     const bannerObjects = {teamBannerUrl: matches.team_banner_url}
     const lastestMatchObjects = {
       umpires: matches.latest_match_details.umpires,
@@ -75,6 +79,56 @@ class TeamMatches extends Component {
     })
   }
 
+  getMatchStats = () => {
+    const {recentMatchList} = this.state
+
+    const wins = recentMatchList.filter(match => match.matchStatus === 'Won')
+
+    const losses = recentMatchList.length - wins
+
+    return [
+      {name: 'Wins', value: wins.length},
+      {name: 'Losses', value: losses},
+    ]
+  }
+
+  renderPieChart = () => {
+    const data = this.getMatchStats()
+    const COLORS = ['#4CAF50', '#F44336']
+
+    return (
+      <div className="pie-chart-container">
+        <h2 className="text-center text-white">Match Results</h2>
+        <PieChart width={300} height={300}>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={({name, percent}) =>
+              `${name}: ${(percent * 100).toFixed(0)}%`
+            }
+            outerRadius={100}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            {COLORS.map(entry => (
+              <Cell key={entry} fill={entry} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend
+            payload={[
+              {value: 'Wins', type: 'square', color: '#4CAF50'},
+              {value: 'Losses', type: 'square', color: '#F44336'},
+              {value: 'Total Matches', type: 'square', color: '#8884d8'},
+            ]}
+          />
+        </PieChart>
+      </div>
+    )
+  }
+
   render() {
     const {recentMatchList, isLoader} = this.state
     const {lastestMatchObject, bannerObject} = this.state
@@ -107,6 +161,16 @@ class TeamMatches extends Component {
                 <MatchCard key={each.id} recentMatchItem={each} />
               ))}
             </ul>
+            <div className="match-status-titile-container">
+              <h1>Match Status</h1>
+            </div>
+            {this.renderPieChart()}
+
+            <Link to="/">
+              <button className="back-btn" type="button">
+                Back
+              </button>
+            </Link>
           </div>
         )}
       </>
