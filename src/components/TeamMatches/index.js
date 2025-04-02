@@ -112,9 +112,10 @@ class TeamMatches extends Component {
             fill="#8884d8"
             dataKey="value"
           >
-            {COLORS.map(entry => (
-              <Cell key={entry} fill={entry} />
+            {data.map((entry,index) => (
+              <Cell key={entry} fill={COLORS[index]} />
             ))}
+    
           </Pie>
           <Tooltip />
           <Legend
